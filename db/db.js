@@ -23,12 +23,25 @@ MongoClient.connect(url, function(err, db) {
 
 	}, (err, result) => {
 		if(err) {
-			return console.log('Unable to insert todo', err);
+			return console.log('Unable to insert item', err);
 		}
 
-		console.log(JSON.stringify(result.ops, undefined, 2));
+		console.log('Success insertOne response', JSON.stringify(result.ops, undefined, 2));
 	});
 
+	// example delete one item
+	db.collection('Items').deleteOne({
+		name: 'eggs'
+	}, (err, result) => {
+		if(err) {
+			return console.log('Unable to delete item', err);
+		}
+
+		console.log('Success deleteOne response', result.result);
+	});
+
+
 	db.close();
+
 
 });
