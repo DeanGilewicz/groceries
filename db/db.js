@@ -13,31 +13,45 @@ MongoClient.connect(url, function(err, db) {
 	console.log('Connected to MongoDB server');
 
 	// example add one item
-	db.collection('Items').insertOne({
-		name: 'eggs',
-		type: 'carton',
-		quantity: 12,
-		remaining: 6,
-		threshold: 5,
-		replenish: false
+	// db.collection('Items').insertOne({
+	// 	name: 'eggs',
+	// 	type: 'carton',
+	// 	quantity: 12,
+	// 	remaining: 6,
+	// 	threshold: 5,
+	// 	replenish: false
 
-	}, (err, result) => {
-		if(err) {
-			return console.log('Unable to insert item', err);
-		}
+	// }, (err, result) => {
+	// 	if(err) {
+	// 		return console.log('Unable to insert item', err);
+	// 	}
 
-		console.log('Success insertOne response', JSON.stringify(result.ops, undefined, 2));
-	});
+	// 	console.log('Success insertOne response', JSON.stringify(result.ops, undefined, 2));
+	// });
 
 	// example delete one item
-	db.collection('Items').deleteOne({
-		name: 'eggs'
+	// db.collection('Items').deleteOne({
+	// 	name: 'eggs'
+	// }, (err, result) => {
+	// 	if(err) {
+	// 		return console.log('Unable to delete item', err);
+	// 	}
+
+	// 	console.log('Success deleteOne response', result.result);
+	// });
+
+	// example update an item
+   
+	db.collection('Items').updateOne({
+		name : 'eggs'
+	}, {
+		$set: { 'type' : 'carton' }
 	}, (err, result) => {
 		if(err) {
-			return console.log('Unable to delete item', err);
+			return console.log('Unable to update item', err);
 		}
 
-		console.log('Success deleteOne response', result.result);
+		console.log('Success updateOne response', result);
 	});
 
 
