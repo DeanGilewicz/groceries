@@ -42,16 +42,35 @@ MongoClient.connect(url, function(err, db) {
 
 	// example update an item
    
-	db.collection('Items').updateOne({
-		name : 'eggs'
-	}, {
-		$set: { 'type' : 'carton' }
-	}, (err, result) => {
+	// db.collection('Items').updateOne({
+	// 	name : 'eggs'
+	// }, {
+	// 	$set: { 'type' : 'carton' }
+	// }, (err, result) => {
+	// 	if(err) {
+	// 		return console.log('Unable to update item', err);
+	// 	}
+
+	// 	console.log('Success updateOne response', result.result);
+	// });
+
+	// example get one item
+
+	// db.collection('Items').findOne({name: 'eggs'}, (err, result) => {
+	// 	if(err) {
+	// 		return console.log('Unable to get item(s)', err);
+	// 	}
+
+	// 	console.log('Success find response', result);
+	// });
+
+	// example get all items
+	db.collection('Items').find().toArray((err, result) => {
 		if(err) {
-			return console.log('Unable to update item', err);
+			return console.log('Unable to get item(s)', err);
 		}
 
-		console.log('Success updateOne response', result);
+		console.log('Success find response', result);
 	});
 
 
