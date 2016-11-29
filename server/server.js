@@ -51,6 +51,23 @@ app.get('/items/:id', (req, res) => {
 	}).catch((e) => res.status(400).send());
 });
 
+app.delete('/items/:id', (req, res) => {
+	var id = req.params.id;
+	if(!ObjectID.isValid(id)) {
+		return res.status(400).send();
+	}
+
+	Item.findOneAndRemove({
+		_id: id,
+	}).then((item) => {
+		if (!item) {
+			return res.status(404).send();
+		}
+		res.status(200).send({item});
+	}).catch((e) => res.status(400).send());
+
+});
+
 app.listen(3000, function() {
 	console.log('express server listening on port 3000');
 });
