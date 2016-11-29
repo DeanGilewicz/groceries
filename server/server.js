@@ -3,10 +3,19 @@ const express = require('express');
 const ObjectID = require('mongodb').ObjectID;
 
 var app = express();
-
+app.set('view engine', 'ejs');
 
 app.get('/', function(req, res) {
-	res.send('hello world');
+	res.redirect('/items');
+});
+
+app.get('/items', (req, res) => {
+	Item.find().then((items) => {
+		// res.send({items});
+		res.render('index', {items: items});
+	}, (e) => {
+		res.send(400).send(e);
+	});
 });
 
 app.post('/items', function(req, res) {
@@ -23,14 +32,6 @@ app.post('/items', function(req, res) {
 		res.send(item);
 	}, function(err) {
 		res.status(400).send(err);
-	});
-});
-
-app.get('/items', (req, res) => {
-	Item.find().then((items) => {
-		res.send({items});
-	}, (e) => {
-		res.send(400).send(e);
 	});
 });
 
