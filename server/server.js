@@ -5,15 +5,23 @@ const bodyParser 	= require('body-parser');
 
 var app = express();
 
-// APP CONFIG
+////////////////
+//	APP CONFIG
+////////////////
+
 app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({ extended: true }));
 
+////////////////
+//	ROUTES
+///////////////
 
+// initial
 app.get('/', function(req, res) {
 	res.redirect('/items');
 });
 
+// INDEX
 app.get('/items', (req, res) => {
 	Item.find().then((items) => {
 		// res.send({items});
@@ -23,6 +31,11 @@ app.get('/items', (req, res) => {
 	});
 });
 
+
+// NEW - show form to create items - /items/new
+
+
+// CREATE
 app.post('/items', function(req, res) {
 	var item = new Item({
 		name: 'milk',
@@ -40,6 +53,7 @@ app.post('/items', function(req, res) {
 	});
 });
 
+// SHOW
 app.get('/items/:id', (req, res) => {
 	var id = req.params.id;
 
@@ -57,6 +71,11 @@ app.get('/items/:id', (req, res) => {
 	}).catch((e) => res.status(400).send());
 });
 
+
+// EDIT - show edit form for one item - /items/:id/edit
+
+
+// UPDATE
 app.put('/items/:id', function(req, res) {
 	// console.log(req.body);
 	var itemName = req.body.name;
@@ -83,7 +102,7 @@ app.put('/items/:id', function(req, res) {
 
 });
 
-
+// DESTROY
 app.delete('/items/:id', (req, res) => {
 	var id = req.params.id;
 	if(!ObjectID.isValid(id)) {
