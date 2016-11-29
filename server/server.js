@@ -1,9 +1,14 @@
-const Item = require('./models/item').Item;
-const express = require('express');
-const ObjectID = require('mongodb').ObjectID;
+const Item 			= require('./models/item').Item;
+const express 		= require('express');
+const ObjectID 		= require('mongodb').ObjectID;
+const bodyParser 	= require('body-parser');
 
 var app = express();
+
+// APP CONFIG
 app.set('view engine', 'ejs');
+app.use(bodyParser.urlencoded({ extended: true }));
+
 
 app.get('/', function(req, res) {
 	res.redirect('/items');
@@ -51,6 +56,33 @@ app.get('/items/:id', (req, res) => {
 		res.status(200).send({item});
 	}).catch((e) => res.status(400).send());
 });
+
+app.put('/items/:id', function(req, res) {
+	// console.log(req.body);
+	var itemName = req.body.name;
+	var itemType = req.body.type;
+	var itemThreshold = req.body.threshold;
+	var itemData = { name: itemName, type: itemType, threshold: itemThreshold };
+	
+	// 'under the hood' way to get at the body data without using node module
+	// var body = [];
+	// 	req.on('data', function(chunk) {
+	// 	body.push(chunk);
+	// }).on('end', function() {
+	// 	body = Buffer.concat(body).toString();
+	// 	console.log('data here', body);
+	// });
+
+	Item.findByIdAndUpdate(req.params.id, itemData, {new:true},function(err, item) {
+		// console.log(item);
+		if(err) {
+			return res.status(404).send();
+		}
+		res.status(200).send(item);
+	});
+
+});
+
 
 app.delete('/items/:id', (req, res) => {
 	var id = req.params.id;
