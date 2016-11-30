@@ -28,6 +28,7 @@ app.get('/', function(req, res) {
 	res.redirect('/items');
 });
 
+
 // INDEX
 app.get('/items', (req, res) => {
 	Item.find().then((items) => {
@@ -40,25 +41,32 @@ app.get('/items', (req, res) => {
 
 
 // NEW - show form to create items - /items/new
+app.get('/items/new', function(req, res) {
+	res.render('items/new');
+});
 
 
 // CREATE
 app.post('/items', function(req, res) {
-	var item = new Item({
-		name: 'milk',
-		type: 'carton',
-		threshold: 1,
-		quantity: 2,
-		replenish: false,
-		completedAt: 123
+	// var item = new Item({
+	// 	name: 'milk',
+	// 	type: 'carton',
+	// 	threshold: 1,
+	// 	quantity: 2,
+	// 	replenish: false,
+	// 	completedAt: 123
+	// });
+
+	Item.create(req.body.item, function(err, item) {
+		if(err) {
+			return res.status(400).send(err);
+			// res.render('items/new');
+		}
+		res.redirect('/items');
 	});
 
-	item.save().then(function(item) {
-		res.send(item);
-	}, function(err) {
-		res.status(400).send(err);
-	});
 });
+
 
 // SHOW
 app.get('/items/:id', (req, res) => {
@@ -109,6 +117,7 @@ app.put('/items/:id', function(req, res) {
 
 });
 
+
 // DESTROY
 app.delete('/items/:id', (req, res) => {
 	var id = req.params.id;
@@ -126,6 +135,7 @@ app.delete('/items/:id', (req, res) => {
 	}).catch((e) => res.status(400).send());
 
 });
+
 
 app.listen(3000, function() {
 	console.log('express server listening on port 3000');

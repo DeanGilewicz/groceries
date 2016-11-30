@@ -23,14 +23,14 @@ var itemSchema = new mongoose.Schema({
 		required: true,
 		default: null
 	},
-	// remaining: {
-	// 	type: Number,
-	// 	default: null
-	// },
 	replenish: {
 		type: Boolean,
 		required: true,
 		default: false
+	},
+	createdAt: {
+		type: Date,
+		default: Date.now
 	},
 	completedAt: {
 		type: Number,
