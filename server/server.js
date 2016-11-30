@@ -1,7 +1,8 @@
-const Item 			= require('./models/item').Item;
-const express 		= require('express');
-const ObjectID 		= require('mongodb').ObjectID;
-const bodyParser 	= require('body-parser');
+const Item 			 = require('./models/item').Item;
+const express 		 = require('express');
+const ObjectID 		 = require('mongodb').ObjectID;
+const bodyParser 	 = require('body-parser');
+const methodOverride = require('method-override');
 
 var app = express();
 
@@ -15,6 +16,7 @@ var app = express();
 app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(__dirname + '/../public'));
+app.use(methodOverride('_method'));
 
 
 
@@ -88,15 +90,24 @@ app.get('/items/:id', (req, res) => {
 
 
 // EDIT - show edit form for one item - /items/:id/edit
+app.get('/items/:id/edit', function(req, res) {
+	Item.findById(req.params.id, function(err, item) {
+		if(err) {
+			return res.status(400).send(err);
+			// res.redirect('/items');
+		}
+		res.render('items/edit', { item: item });
+	});
+});
 
 
 // UPDATE
 app.put('/items/:id', function(req, res) {
 	// console.log(req.body);
-	var itemName = req.body.name;
-	var itemType = req.body.type;
-	var itemThreshold = req.body.threshold;
-	var itemData = { name: itemName, type: itemType, threshold: itemThreshold };
+	// var itemName = req.body.name;
+	// var itemType = req.body.type;
+	// var itemThreshold = req.body.threshold;
+	// var itemData = { name: itemName, type: itemType, threshold: itemThreshold };
 	
 	// 'under the hood' way to get at the body data without using node module
 	// var body = [];
@@ -107,12 +118,14 @@ app.put('/items/:id', function(req, res) {
 	// 	console.log('data here', body);
 	// });
 
-	Item.findByIdAndUpdate(req.params.id, itemData, {new:true},function(err, item) {
-		// console.log(item);
+	// Item.findByIdAndUpdate(req.params.id, itemData, {new:true},function(err, item) {
+		
+	Item.findByIdAndUpdate(req.params.id, req.body.item, function(err, item) {
 		if(err) {
-			return res.status(404).send();
+			return res.status(404).send(err);
 		}
-		res.status(200).send(item);
+		// res.status(200).send(item);
+		res.redirect('/items');
 	});
 
 });
