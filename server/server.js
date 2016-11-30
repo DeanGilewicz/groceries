@@ -5,16 +5,23 @@ const bodyParser 	= require('body-parser');
 
 var app = express();
 
+
+
 ////////////////
 //	APP CONFIG
 ////////////////
 
+
 app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.static(__dirname + '/../public'));
+
+
 
 ////////////////
 //	ROUTES
 ///////////////
+
 
 // initial
 app.get('/', function(req, res) {
