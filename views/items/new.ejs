@@ -1,0 +1,22 @@
+<% include ../partials/header %>
+
+	<div class="container_main">
+
+		<h1>Add New Item</h1>
+
+		<form action="/items" method="POST">
+			<input type="text" name="item[name]" placeholder="name" />
+			<select name="item[type]">
+				<option value="whole">whole</option>
+				<option value="carton">carton</option>
+				<option value="packet">packet</option>
+				<option value="can">can</option>
+			</select>
+			<input type="number" name="item[quantity]" placeholder="quantity" />
+			<input type="number" name="item[threshold]" placeholder="threshold" />
+			<input type="submit" value="submit" />
+		</form>
+
+	</div>
+
+<% include ../partials/footer %>
