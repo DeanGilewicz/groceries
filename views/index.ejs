@@ -1,14 +1,21 @@
 <% include ./partials/header %>
 
-	<div class="container_main">
-		
-		<h1>Welcome to Groceries</h1>
-	
-		<ul>
-			<% items.forEach(function(item) { %>
-				<li><%= item.name %> - <%= item.type %> - <a href="/items/<%= item._id %>/edit">Edit</a></li>
-			<% }); %>
-		</ul>
+	<div class="container_main home_route">
+
+		<div class="grid">
+  			<div class="col-100">
+  				<div class="module title">
+  					<h1>Welcome to Groceries</h1>
+  				</div>
+			</div>
+			<div class="col-100">
+				<ul>
+					<% items.forEach(function(item) { %>
+						<li><%= item.name %> - <%= item.type %> - <a href="/items/<%= item._id %>/edit">Edit</a></li>
+					<% }); %>
+				</ul>
+			</div>
+		</div>
 
 	</div>
 

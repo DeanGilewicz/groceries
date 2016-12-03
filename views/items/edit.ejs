@@ -1,21 +1,33 @@
 <% include ../partials/header %>
 
-	<div class="container_main">
+	<div class="container_main edit_route">
 
-		<h1>Edit <%= item.name %></h1>
+		<div class="grid">
+  			<div class="col-100">
+  				<div class="module title">
+  					<h1>Edit <%= item.name %></h1>
+  				</div>
+  			</div>
+  		</div>
 
-		<form action="/items/<%= item._id %>?_method=PUT" method="POST">
-			<input type="text" name="item[name]" value="<%= item.name %>" />
-			<select name="item[type]">
-				<option value="whole" <% if(item.type==='whole') { %>selected<% } %> >whole</option>
-				<option value="carton" <% if(item.type==='carton') { %>selected<% } %> >carton</option>
-				<option value="packet" <% if(item.type==='packet') { %>selected<% } %> >packet</option>
-				<option value="can" <% if(item.type==='can') { %>selected<% } %> >can</option>
-			</select>
-			<input type="number" name="item[quantity]" value="<%= item.quantity %>" />
-			<input type="number" name="item[threshold]" value="<%= item.threshold %>" />
-			<input type="submit" value="submit" />
-		</form>
+		<div class="grid">
+  			<div class="col-100">
+  				<div class="module title">
+					<form action="/items/<%= item._id %>?_method=PUT" method="POST">
+						<input type="text" name="item[name]" value="<%= item.name %>" />
+						<select name="item[type]">
+							<option value="whole" <% if(item.type==='whole') { %>selected<% } %> >whole</option>
+							<option value="carton" <% if(item.type==='carton') { %>selected<% } %> >carton</option>
+							<option value="packet" <% if(item.type==='packet') { %>selected<% } %> >packet</option>
+							<option value="can" <% if(item.type==='can') { %>selected<% } %> >can</option>
+						</select>
+						<input type="number" name="item[quantity]" value="<%= item.quantity %>" />
+						<input type="number" name="item[threshold]" value="<%= item.threshold %>" />
+						<input type="submit" value="submit" />
+					</form>
+				</div>
+			</div>
+		</div>
 
 	</div>
 
